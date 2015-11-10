@@ -2,15 +2,18 @@
 
 [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][depstat-image]][depstat-url] [![devDependency Status][devdepstat-image]][devdepstat-url] [![peerDependency Status][peerdepstat-image]][peerdepstat-url]
 
-PairTable is a class with a very similar API to that of [ES2015 Set](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Set), except that it deals with **pairs** of values.
+PairTable is a class with a very similar API to that of [ES2015 Set][Set], except that it deals with pairs of values.
 
-- It behaves like a Set, in that adding a pair that already exists will have no effect.
+- It behaves like a [Set] in that adding a pair that already exists will have no effect.
 - Although it associates pairs of values, it's not the same thing as a Map, because a single value may appear multiple times in either column. In other words, there are no "keys" – instead there are just "lefts" and "rights" (like a join table).
-- For determining equivalence, `'a', 'b'` is not considered the same as the pair as `'b', 'a'`.
+- For determining equivalence, `'a', 'b'` is not considered the same pair as `'b', 'a'`.
+
 
 ## Usage
 
 ```js
+import PairTable from 'pair-table';
+
 const table = new PairTable();
 
 table.add('foo', 'bar');
@@ -29,31 +32,48 @@ table.getRightsFor('foo'); // Set {'bar', 'baz'}
 table.getLeftsFor('baz'); // Set {'foo'}
 ```
 
-### Methods
+## API
 
-A PairTable instance has the same methods as a [Set](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Set) instance (except `entries` and `forEach`). But methods like `has()`, `add()`, and `remove()` all take **two** values in a PairTable.
+#### add(left, right)
 
-It also has these additional methods:
+Adds a pairing and returns the table. Has no effect if this exact pairing already exists.
 
-##### getRightsFor(left)
+#### remove(left, right)
 
-Returns a Set of any 'right' values that are paired with the given 'left' value.
+Removes a pairing and returns the table. Has no effect if this exact pairing does not exist.
 
-##### getLeftsFor(right)
+#### has(left, right)
 
-Returns a Set of any 'left' values that are paired with the given 'right' value.
+Checks if a pairing exists and returns `true` or `false`.
 
-##### getAllLefts()
+#### clear()
 
-Returns a Set of all the left values.
+Removes all pairings
 
-##### getAllRights()
+#### getRightsFor(left)
 
-Returns a Set of all the left values.
+Returns a [Set] of any 'right' values that are paired with the given 'left' value.
 
-### Iterating
+#### getLeftsFor(right)
 
-You can iterate over the whole table – each iteration gets a two-item array in the form `left, right`:
+Returns a [Set] of any 'left' values that are paired with the given 'right' value.
+
+#### getAllLefts()
+
+Returns a [Set] of all the left values.
+
+#### getAllRights()
+
+Returns a [Set] of all the left values.
+
+#### size
+
+The number of pairings currently in the table.
+
+
+## Iterating
+
+You can iterate over the whole table. Each iteration gets a two-item array in the form `left, right`:
 
 ```js
 const table = new PairTable();
@@ -78,7 +98,6 @@ for (const [animal, food] of table) {
 MIT
 
 
-<!-- badge URLs -->
 [npm-url]: https://npmjs.org/package/pair-table
 [npm-image]: https://img.shields.io/npm/v/pair-table.svg?style=flat-square
 
@@ -93,3 +112,5 @@ MIT
 
 [peerdepstat-url]: https://david-dm.org/callumlocke/pair-table#info=peerDependencies
 [peerdepstat-image]: https://img.shields.io/david/peer/callumlocke/pair-table.svg?style=flat-square&label=peerDeps
+
+[Set]: https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Set
