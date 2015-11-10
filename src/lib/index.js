@@ -136,6 +136,13 @@ export default class PairTable {
   }
 
   /**
+   * Returns a string (works with console.log() etc.)
+   */
+  inspect() {
+    return `PairTable[${this[SIZE]} pairs]`;
+  }
+
+  /**
    * Iterating over a PairTable gets you a two-item array on each iteration: [left, right]
    */
   [Symbol.iterator]() {
