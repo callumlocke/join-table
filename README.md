@@ -36,19 +36,19 @@ table.getLeftsFor('baz'); // Set {'foo'}
 
 #### add(left, right)
 
-Adds a pairing and returns the table. Has no effect if this exact pairing already exists.
+Adds a pair and returns the table. Has no effect if this exact pair already exists.
 
 #### remove(left, right)
 
-Removes a pairing and returns the table. Has no effect if this exact pairing does not exist.
+Removes a pair and returns the table. Has no effect if this exact pair does not exist.
 
 #### has(left, right)
 
-Checks if a pairing exists and returns `true` or `false`.
+Checks if a pair exists and returns `true` or `false`.
 
 #### clear()
 
-Removes all pairings
+Removes all pairs
 
 #### getRightsFor(left)
 
@@ -68,7 +68,7 @@ Returns a [Set] of all the left values.
 
 #### size
 
-The number of pairings currently in the table.
+The number of pairs currently in the table.
 
 
 ## Iterating
