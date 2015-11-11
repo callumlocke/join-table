@@ -74,12 +74,12 @@ export default class PairTable {
 
     for (let i = 0; i < size; i++) {
       if (lefts[i] === left && rights[i] === right) {
-        // take the last item of each array and use it to overwrite the item to
-        // be deleted, then truncate the arrays
+        // take the last item of each array and use it to overwrite the to- be-deleted item to
+        // then truncate the last item off the arrays
         const lastIndex = size - 1;
         lefts[i] = lefts[lastIndex];
-        lefts.length = lastIndex;
         rights[i] = rights[lastIndex];
+        lefts.length = lastIndex;
         rights.length = lastIndex;
         this[SIZE] = lastIndex;
         return this;
@@ -143,12 +143,11 @@ export default class PairTable {
   }
 
   /**
-   * Iterating over a PairTable gets you a two-item array on each iteration: [left, right]
+   * Iterating over a PairTable gets you each pair as a two-item array: [left, right]
    */
   [Symbol.iterator]() {
     const lefts = this[LEFTS];
     const rights = this[RIGHTS];
-
     const lastIndex = this[SIZE] - 1;
     let index = 0;
 

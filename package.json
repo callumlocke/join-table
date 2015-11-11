@@ -5,11 +5,14 @@
   "babel": {
     "stage": 0,
     "blacklist": [
-      "regenerator",
-      "es6.forOf",
-      "es6.templateLiterals",
+      "es6.arrowFunctions",
+      "es6.classes",
       "es6.constants",
-      "es6.properties.computed"
+      "es6.forOf",
+      "es6.properties.computed",
+      "es6.spec.blockScoping",
+      "es6.templateLiterals",
+      "regenerator"
     ],
     "optional": [
       "bluebirdCoroutines"
