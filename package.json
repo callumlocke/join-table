@@ -1,7 +1,7 @@
 {
   "name": "pair-table",
   "description": "Class for a fast collection of pairs of values, with a Set-like API",
-  "version": "1.0.3",
+  "version": "1.1.0",
   "babel": {
     "presets": [
       "es2015-node5"
