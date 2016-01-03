@@ -18,7 +18,8 @@
     "rimraf": "^2.5.0"
   },
   "engines": {
-    "node": ">=5"
+    "node": ">=4.2",
+    "npm": ">=2"
   },
   "files": [
     "dist",
