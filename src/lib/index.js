@@ -2,8 +2,6 @@ const SIZE = Symbol();
 const LEFTS = Symbol();
 const RIGHTS = Symbol();
 
-const iteratorDone = Object.defineProperty({}, 'done', {value: true});
-
 export default class PairTable {
   constructor() {
     this[SIZE] = 0;
@@ -16,6 +14,13 @@ export default class PairTable {
    */
   get size() {
     return this[SIZE];
+  }
+
+  /**
+   * Disallow overwriting the size property.
+   */
+  set size(value) { // eslint-disable-line no-unused-vars
+    throw new Error('PairTable: size property is not writable');
   }
 
   /**
@@ -65,7 +70,8 @@ export default class PairTable {
   }
 
   /**
-   * Remove a pairing from the join table. (Has no effect if the pairing does not exist.)
+   * Remove a pairing from the join table.
+   * (Has no effect if the pairing does not exist.)
    */
   remove(left, right) {
     const lefts = this[LEFTS];
@@ -74,8 +80,7 @@ export default class PairTable {
 
     for (let i = 0; i < size; i++) {
       if (lefts[i] === left && rights[i] === right) {
-        // take the last item of each array and use it to overwrite the to- be-deleted item to
-        // then truncate the last item off the arrays
+        // fast method of deleting an item from an array
         const lastIndex = size - 1;
         lefts[i] = lefts[lastIndex];
         rights[i] = rights[lastIndex];
@@ -143,7 +148,8 @@ export default class PairTable {
   }
 
   /**
-   * Iterating over a PairTable gets you each pair as a two-item array: [left, right]
+   * Iterating over a PairTable gets you each pair as a two-item array:
+   * [left, right]
    */
   [Symbol.iterator]() {
     const lefts = this[LEFTS];
@@ -153,7 +159,7 @@ export default class PairTable {
 
     return {
       next: () => {
-        if (index > lastIndex) return iteratorDone;
+        if (index > lastIndex) return {done: true};
 
         const result = {
           value: [

@@ -2,12 +2,7 @@
 
 [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][depstat-image]][depstat-url] [![devDependency Status][devdepstat-image]][devdepstat-url] [![peerDependency Status][peerdepstat-image]][peerdepstat-url]
 
-PairTable is a class with a very similar API to that of [ES2015 Set][Set], except that it deals with pairs of values.
-
-- It behaves like a [Set] in that adding a pair that already exists will have no effect.
-- Although it associates pairs of values, it's not the same thing as a Map, because a single value may appear multiple times in either column. In other words, there are no "keys" – instead there are just "lefts" and "rights" (like a join table).
-- For determining equivalence, `'a', 'b'` is not considered the same pair as `'b', 'a'`.
-
+PairTable is a class with an API similar to the ES2015 [Set], except that it deals with **ordered pairs** of values, so you can use it as a join table.
 
 ## Usage
 
@@ -20,8 +15,8 @@ table.add('foo', 'bar');
 table.add('foo', 'baz');
 table.add('123', 456);
 
-table.has('foo', 'no'); // false
-table.has('baz', 'bar'); // false
+table.has('foo', 'no');  // false (doesn't exist)
+table.has('baz', 'foo'); // false (wrong order)
 
 table.has('foo', 'bar'); // true
 table.has('foo', 'baz'); // true
@@ -31,6 +26,12 @@ table.has('123', '456'); // false (strings !== integers)
 table.getRightsFor('foo'); // Set {'bar', 'baz'}
 table.getLeftsFor('baz'); // Set {'foo'}
 ```
+
+Notes:
+
+- It's conceptually similar to an ES2015 [Set], but with every item being a pairing of two values – ‘left’ and ‘right’.
+  - It might look more like a [Map] at first glance, but it's not – in a Map, the left side in each pairing is a key, and keys must be unique. With a pair table, a single value may appear multiple times in either column.
+- The order of a pair matters: `'a', 'b'` is not the same as `'b', 'a'`.
 
 ## API
 
@@ -48,15 +49,15 @@ Checks if a pair exists and returns `true` or `false`.
 
 #### clear()
 
-Removes all pairs
+Empties the table.
 
 #### getRightsFor(left)
 
-Returns a [Set] of any 'right' values that are paired with the given 'left' value.
+Returns the [Set] of ‘right’ values that are paired with the given ‘left’ value.
 
 #### getLeftsFor(right)
 
-Returns a [Set] of any 'left' values that are paired with the given 'right' value.
+Returns the [Set] of ‘left’ values that are paired with the given ‘right’ value.
 
 #### getAllLefts()
 
@@ -64,7 +65,7 @@ Returns a [Set] of all the left values.
 
 #### getAllRights()
 
-Returns a [Set] of all the left values.
+Returns a [Set] of all the right values.
 
 #### size
 
@@ -73,7 +74,7 @@ The number of pairs currently in the table.
 
 ## Iterating
 
-You can iterate over the whole table. Each iteration gets a two-item array in the form `left, right`:
+Every pair table is [iterable]. Each iteration gets a two-item array in the form `left, right`:
 
 ```js
 const table = new PairTable();
@@ -90,6 +91,13 @@ for (const [animal, food] of table) {
 // rabbit eats lettuce
 ```
 
+Warning: Updating the table while you're iterating over it will probably confuse the iterator. If you really need to do it, spread the table into an array first:
+
+```js
+for (const [x, y] of [...table]) {
+  // safe to update table here
+}
+```
 
 ---
 
@@ -114,3 +122,5 @@ MIT
 [peerdepstat-image]: https://img.shields.io/david/peer/callumlocke/pair-table.svg?style=flat-square&label=peerDeps
 
 [Set]: https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Set
+[Map]: https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Map
+[iterable]: https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Iteration_protocols#iterable
