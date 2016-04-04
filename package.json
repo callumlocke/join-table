@@ -12,6 +12,9 @@
       "transform-flow-strip-types"
     ]
   },
+  "dependencies": {
+    "babel-runtime": "^6.6.1"
+  },
   "devDependencies": {
     "babel-cli": "^6.6.5",
     "babel-eslint": "^6.0.2",
@@ -43,11 +46,8 @@
   "scripts": {
     "build": "del dist && babel src --out-dir dist --source-maps",
     "buildwatch": "del dist && babel src --out-dir dist --source-maps --watch",
-    "testwatch": "cd dist && mocha --watch",
     "prepublish": "npm run build",
-    "test": "eslint . && npm run build && cd dist && mocha"
-  },
-  "dependencies": {
-    "babel-runtime": "^6.6.1"
+    "test": "eslint . && npm run build && cd dist && mocha",
+    "testwatch": "cd dist && mocha --watch"
   }
 }
