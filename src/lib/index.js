@@ -1,24 +1,28 @@
-const SIZE = Symbol();
-const LEFTS = Symbol();
-const RIGHTS = Symbol();
+/* @flow */
 
 export default class PairTable {
+  _size: number;
+  _lefts: Array<any>;
+  _rights: Array<any>;
+
   constructor() {
-    this[SIZE] = 0;
-    this[LEFTS] = [];
-    this[RIGHTS] = [];
+    this._size = 0;
+    this._lefts = [];
+    this._rights = [];
   }
 
   /**
    * How many pairings are in the table.
    */
+  /* $FlowIssue */
   get size() {
-    return this[SIZE];
+    return this._size;
   }
 
   /**
    * Disallow overwriting the size property.
    */
+  /* $FlowIssue */
   set size(value) { // eslint-disable-line no-unused-vars
     throw new Error('PairTable: size property is not writable');
   }
@@ -27,18 +31,18 @@ export default class PairTable {
    * Removes all pairings from the table.
    */
   clear() {
-    this[SIZE] = 0;
-    this[LEFTS].length = 0;
-    this[RIGHTS].length = 0;
+    this._size = 0;
+    this._lefts.length = 0;
+    this._rights.length = 0;
   }
 
   /**
    * Finds out if a given pairing exists.
    */
-  has(left, right) {
-    const lefts = this[LEFTS];
-    const rights = this[RIGHTS];
-    const size = this[SIZE];
+  has(left:any, right:any) : bool {
+    const lefts = this._lefts;
+    const rights = this._rights;
+    const size = this._size;
 
     for (let i = 0; i < size; i++) {
       if (lefts[i] === left && rights[i] === right) return true;
@@ -50,10 +54,10 @@ export default class PairTable {
   /**
    * Adds a new pair. (Has no effect if the pairing already exists.)
    */
-  add(left, right) {
-    const lefts = this[LEFTS];
-    const rights = this[RIGHTS];
-    const size = this[SIZE];
+  add(left:any, right:any) {
+    const lefts = this._lefts;
+    const rights = this._rights;
+    const size = this._size;
 
     // if this pairing already exists, do nothing
     for (let i = 0; i < size; i++) {
@@ -61,10 +65,10 @@ export default class PairTable {
     }
 
     // add the new pairing
-    const index = this[SIZE];
+    const index = this._size;
     lefts[index] = left;
     rights[index] = right;
-    this[SIZE]++;
+    this._size++;
 
     return this;
   }
@@ -73,10 +77,10 @@ export default class PairTable {
    * Remove a pairing from the join table.
    * (Has no effect if the pairing does not exist.)
    */
-  remove(left, right) {
-    const lefts = this[LEFTS];
-    const rights = this[RIGHTS];
-    const size = this[SIZE];
+  remove(left:any, right:any) {
+    const lefts = this._lefts;
+    const rights = this._rights;
+    const size = this._size;
 
     for (let i = 0; i < size; i++) {
       if (lefts[i] === left && rights[i] === right) {
@@ -86,7 +90,7 @@ export default class PairTable {
         rights[i] = rights[lastIndex];
         lefts.length = lastIndex;
         rights.length = lastIndex;
-        this[SIZE] = lastIndex;
+        this._size = lastIndex;
         return this;
       }
     }
@@ -97,10 +101,10 @@ export default class PairTable {
   /**
    * Gets all 'lefts' associated with the given 'right'.
    */
-  getLeftsFor(right) {
-    const lefts = this[LEFTS];
-    const rights = this[RIGHTS];
-    const size = this[SIZE];
+  getLeftsFor(right:any) {
+    const lefts = this._lefts;
+    const rights = this._rights;
+    const size = this._size;
     const results = new Set();
 
     for (let i = 0; i < size; i++) {
@@ -114,9 +118,9 @@ export default class PairTable {
    * Gets all 'rights' associated with the given 'left'.
    */
   getRightsFor(left) {
-    const lefts = this[LEFTS];
-    const rights = this[RIGHTS];
-    const size = this[SIZE];
+    const lefts = this._lefts;
+    const rights = this._rights;
+    const size = this._size;
     const results = new Set();
 
     for (let i = 0; i < size; i++) {
@@ -130,36 +134,37 @@ export default class PairTable {
    * Gets a set of all the lefts.
    */
   getAllLefts() {
-    return new Set(this[LEFTS]);
+    return new Set(this._lefts);
   }
 
   /**
    * Gets a set of all the rights.
    */
   getAllRights() {
-    return new Set(this[RIGHTS]);
+    return new Set(this._rights);
   }
 
   /**
    * Returns a string (works with console.log() etc.)
    */
   inspect() {
-    return `PairTable[${this[SIZE]} pairs]`;
+    return `PairTable[${this._size} pairs]`;
   }
 
   /**
    * Iterating over a PairTable gets you each pair as a two-item array:
    * [left, right]
    */
+  /* $FlowIssue */
   [Symbol.iterator]() {
-    const lefts = this[LEFTS];
-    const rights = this[RIGHTS];
-    const lastIndex = this[SIZE] - 1;
+    const lefts = this._lefts;
+    const rights = this._rights;
+    const lastIndex = this._size - 1;
     let index = 0;
 
     return {
       next: () => {
-        if (index > lastIndex) return {done: true};
+        if (index > lastIndex) return { done: true };
 
         const result = {
           value: [

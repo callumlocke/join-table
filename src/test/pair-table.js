@@ -35,7 +35,10 @@ describe('pair-table', () => {
     assert.deepEqual(Array.from(table.getRightsFor('rabbit')).sort(), ['carrots', 'lettuce']);
 
     assert.deepEqual(Array.from(table.getAllLefts()).sort(), ['cow', 'fox', 'rabbit', 'sheep']);
-    assert.deepEqual(Array.from(table.getAllRights()).sort(), ['carrots', 'grass', 'lettuce', 'rabbit']);
+    assert.deepEqual(
+      Array.from(table.getAllRights()).sort(),
+      ['carrots', 'grass', 'lettuce', 'rabbit']
+    );
   });
 
   it('removing a pair works as expected', () => {
@@ -47,7 +50,8 @@ describe('pair-table', () => {
     assert.strictEqual(table.has('sheep', 'grass'), false);
 
     table.remove('rabbit', 'grass');
-    assert.strictEqual(table.size, 4, `expected size to remain the same after removing non-existent pair`);
+    assert.strictEqual(table.size, 4,
+      'expected size to remain the same after removing non-existent pair');
   });
 
   it('iteration', () => {

@@ -5,33 +5,40 @@
   "babel": {
     "presets": [
       "es2015-node5"
+    ],
+    "plugins": [
+      "transform-flow-strip-types"
     ]
   },
   "devDependencies": {
-    "babel-cli": "^6.3.17",
-    "babel-eslint": "^5.0.0-beta6",
-    "babel-preset-es2015-node5": "^1.1.1",
-    "eslint": "^1.10.3",
-    "eslint-config-exhibit": "^2.0.0",
-    "eslint-plugin-babel": "^3.0.0",
-    "mocha": "^2.3.4",
-    "rimraf": "^2.5.0"
+    "babel-cli": "^6.6.5",
+    "babel-eslint": "^6.0.2",
+    "babel-plugin-transform-flow-strip-types": "^6.7.0",
+    "babel-preset-es2015-node5": "^1.2.0",
+    "eslint": "^2.6.0",
+    "eslint-config-airbnb": "^6.2.0",
+    "eslint-plugin-babel": "^3.1.0",
+    "mocha": "^2.4.5",
+    "del-cli": "^0.2.0"
   },
   "engines": {
-    "node": ">=4.2",
-    "npm": ">=2"
+    "node": ">=0.12"
+  },
+  "eslintConfig": {
+    "extends": "airbnb/base",
+    "root": "true",
+    "parser": "babel-eslint"
   },
   "files": [
-    "dist",
-    "lib"
+    "dist"
   ],
   "jsnext:main": "src/lib/index.js",
   "license": "MIT",
   "main": "dist/lib/index.js",
   "repository": "callumlocke/pair-table",
   "scripts": {
-    "build": "rimraf dist && babel src --out-dir dist --source-maps",
-    "buildwatch": "rimraf dist && babel src --out-dir dist --source-maps --watch",
+    "build": "del dist && babel src --out-dir dist --source-maps",
+    "buildwatch": "del dist && babel src --out-dir dist --source-maps --watch",
     "testwatch": "cd dist && mocha --watch",
     "prepublish": "npm run build",
     "test": "eslint . && npm run build && cd dist && mocha"
