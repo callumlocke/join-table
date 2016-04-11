@@ -1,6 +1,6 @@
 /* @flow */
 
-export default class PairTable {
+export default class JoinTable {
   _size: number;
   _lefts: Array<any>;
   _rights: Array<any>;
@@ -12,7 +12,7 @@ export default class PairTable {
   }
 
   /**
-   * How many pairings are in the table.
+   * How many joins are in the table.
    */
   /* $FlowIssue */
   get size() {
@@ -24,11 +24,11 @@ export default class PairTable {
    */
   /* $FlowIssue */
   set size(value) { // eslint-disable-line no-unused-vars
-    throw new Error('PairTable: size property is not writable');
+    throw new Error('JoinTable: size property is not writable');
   }
 
   /**
-   * Removes all pairings from the table.
+   * Empties the table.
    */
   clear() {
     this._size = 0;
@@ -37,7 +37,7 @@ export default class PairTable {
   }
 
   /**
-   * Finds out if a given pairing exists.
+   * Finds out if a given join exists.
    */
   has(left:any, right:any) : bool {
     const lefts = this._lefts;
@@ -52,19 +52,19 @@ export default class PairTable {
   }
 
   /**
-   * Adds a new pair. (Has no effect if the pairing already exists.)
+   * Adds a new join. (Has no effect if the join already exists.)
    */
   add(left:any, right:any) {
     const lefts = this._lefts;
     const rights = this._rights;
     const size = this._size;
 
-    // if this pairing already exists, do nothing
+    // if this join already exists, do nothing
     for (let i = 0; i < size; i++) {
       if (lefts[i] === left && rights[i] === right) return this;
     }
 
-    // add the new pairing
+    // add the new join
     const index = this._size;
     lefts[index] = left;
     rights[index] = right;
@@ -74,8 +74,8 @@ export default class PairTable {
   }
 
   /**
-   * Remove a pairing from the join table.
-   * (Has no effect if the pairing does not exist.)
+   * Remove a join from the table.
+   * (Has no effect if the join does not exist.)
    */
   remove(left:any, right:any) {
     const lefts = this._lefts;
@@ -133,14 +133,14 @@ export default class PairTable {
   /**
    * Gets a set of all the lefts.
    */
-  getAllLefts() {
+  getLefts() {
     return new Set(this._lefts);
   }
 
   /**
    * Gets a set of all the rights.
    */
-  getAllRights() {
+  getRights() {
     return new Set(this._rights);
   }
 
@@ -148,11 +148,11 @@ export default class PairTable {
    * Returns a string (works with console.log() etc.)
    */
   inspect() {
-    return `PairTable[${this._size} pairs]`;
+    return `JoinTable[${this._size} joins]`;
   }
 
   /**
-   * Iterating over a PairTable gets you each pair as a two-item array:
+   * Iterating over a JoinTable gets you each join as a two-item array:
    * [left, right]
    */
   /* $FlowIssue */

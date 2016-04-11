@@ -1,10 +1,10 @@
 /* global describe, it */
 
-import PairTable from '../lib';
+import JoinTable from '../lib';
 import assert from 'assert';
 
-describe('pair-table', () => {
-  const table = new PairTable();
+describe('join-table', () => {
+  const table = new JoinTable();
   it('has correct starting values', () => {
     assert.strictEqual(table.size, 0);
   });
@@ -34,14 +34,14 @@ describe('pair-table', () => {
     assert.deepEqual(Array.from(table.getLeftsFor('rabbit')), ['fox']);
     assert.deepEqual(Array.from(table.getRightsFor('rabbit')).sort(), ['carrots', 'lettuce']);
 
-    assert.deepEqual(Array.from(table.getAllLefts()).sort(), ['cow', 'fox', 'rabbit', 'sheep']);
+    assert.deepEqual(Array.from(table.getLefts()).sort(), ['cow', 'fox', 'rabbit', 'sheep']);
     assert.deepEqual(
-      Array.from(table.getAllRights()).sort(),
+      Array.from(table.getRights()).sort(),
       ['carrots', 'grass', 'lettuce', 'rabbit']
     );
   });
 
-  it('removing a pair works as expected', () => {
+  it('removing a join works as expected', () => {
     assert.strictEqual(table.size, 5);
     table.remove('sheep', 'grass');
     assert.strictEqual(table.size, 4);
@@ -51,7 +51,7 @@ describe('pair-table', () => {
 
     table.remove('rabbit', 'grass');
     assert.strictEqual(table.size, 4,
-      'expected size to remain the same after removing non-existent pair');
+      'expected size to remain the same after removing non-existent join');
   });
 
   it('iteration', () => {
