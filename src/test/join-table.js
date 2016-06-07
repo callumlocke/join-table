@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /* global describe, it */
 
 import JoinTable from '../lib';
