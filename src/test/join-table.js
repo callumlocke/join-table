@@ -1,8 +1,8 @@
 /* eslint-disable no-console */
 /* global describe, it */
 
-import JoinTable from '../lib';
 import assert from 'assert';
+import JoinTable from '../lib';
 
 describe('join-table', () => {
   const table = new JoinTable();

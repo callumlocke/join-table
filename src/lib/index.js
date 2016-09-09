@@ -1,4 +1,4 @@
-/* @flow */
+// @flow
 
 export default class JoinTable {
   _size: number;
@@ -23,7 +23,7 @@ export default class JoinTable {
    * Disallow overwriting the size property.
    */
   /* $FlowIssue */
-  set size(value) { // eslint-disable-line no-unused-vars
+  set size(value) { // eslint-disable-line no-unused-vars, class-methods-use-this
     throw new Error('JoinTable: size property is not writable');
   }
 
@@ -44,7 +44,7 @@ export default class JoinTable {
     const rights = this._rights;
     const size = this._size;
 
-    for (let i = 0; i < size; i++) {
+    for (let i = 0; i < size; i += 1) {
       if (lefts[i] === left && rights[i] === right) return true;
     }
 
@@ -60,7 +60,7 @@ export default class JoinTable {
     const size = this._size;
 
     // if this join already exists, do nothing
-    for (let i = 0; i < size; i++) {
+    for (let i = 0; i < size; i += 1) {
       if (lefts[i] === left && rights[i] === right) return this;
     }
 
@@ -68,7 +68,7 @@ export default class JoinTable {
     const index = this._size;
     lefts[index] = left;
     rights[index] = right;
-    this._size++;
+    this._size += 1;
 
     return this;
   }
@@ -82,7 +82,7 @@ export default class JoinTable {
     const rights = this._rights;
     const size = this._size;
 
-    for (let i = 0; i < size; i++) {
+    for (let i = 0; i < size; i += 1) {
       if (lefts[i] === left && rights[i] === right) {
         // fast method of deleting an item from an array
         const lastIndex = size - 1;
@@ -107,7 +107,7 @@ export default class JoinTable {
     const size = this._size;
     const results = new Set();
 
-    for (let i = 0; i < size; i++) {
+    for (let i = 0; i < size; i += 1) {
       if (rights[i] === right) results.add(lefts[i]);
     }
 
@@ -117,13 +117,13 @@ export default class JoinTable {
   /**
    * Gets all 'rights' associated with the given 'left'.
    */
-  getRightsFor(left) {
+  getRightsFor(left:any) {
     const lefts = this._lefts;
     const rights = this._rights;
     const size = this._size;
     const results = new Set();
 
-    for (let i = 0; i < size; i++) {
+    for (let i = 0; i < size; i += 1) {
       if (lefts[i] === left) results.add(rights[i]);
     }
 
@@ -173,7 +173,7 @@ export default class JoinTable {
           ],
         };
 
-        index++;
+        index += 1;
 
         return result;
       },
