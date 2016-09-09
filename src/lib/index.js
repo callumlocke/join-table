@@ -155,7 +155,7 @@ export default class JoinTable {
    * Iterating over a JoinTable gets you each join as a two-item array:
    * [left, right]
    */
-  /* $FlowIssue */
+  // $FlowIssue
   [Symbol.iterator]() {
     const lefts = this._lefts;
     const rights = this._rights;
