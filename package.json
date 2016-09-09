@@ -44,7 +44,8 @@
     }
   },
   "files": [
-    "dist"
+    "dist/lib",
+    "src/lib"
   ],
   "jsnext:main": "src/lib/index.js",
   "license": "MIT",
