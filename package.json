@@ -24,7 +24,7 @@
     "babel-preset-stage-0": "^6.5.0",
     "del-cli": "^0.2.0",
     "eslint": "^3.4.0",
-    "eslint-config-airbnb": "^11.0.0",
+    "eslint-config-airbnb": "^11.1.0",
     "eslint-plugin-babel": "^3.3.0",
     "eslint-plugin-import": "^1.14.0",
     "eslint-plugin-jsx-a11y": "^2.2.1",
