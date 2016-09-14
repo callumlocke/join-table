@@ -6,6 +6,7 @@ import JoinTable from '../lib';
 
 describe('join-table', () => {
   const table = new JoinTable();
+
   it('has correct starting values', () => {
     assert.strictEqual(table.size, 0);
   });

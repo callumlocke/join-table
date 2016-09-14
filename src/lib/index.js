@@ -15,7 +15,7 @@ export default class JoinTable {
    * How many joins are in the table.
    */
   /* $FlowIssue */
-  get size() {
+  get size(): number {
     return this._size;
   }
 
@@ -23,14 +23,14 @@ export default class JoinTable {
    * Disallow overwriting the size property.
    */
   /* $FlowIssue */
-  set size(value) { // eslint-disable-line no-unused-vars, class-methods-use-this
+  set size(value): void { // eslint-disable-line no-unused-vars, class-methods-use-this
     throw new Error('JoinTable: size property is not writable');
   }
 
   /**
    * Empties the table.
    */
-  clear() {
+  clear(): void {
     this._size = 0;
     this._lefts.length = 0;
     this._rights.length = 0;
@@ -39,7 +39,7 @@ export default class JoinTable {
   /**
    * Finds out if a given join exists.
    */
-  has(left:any, right:any) : bool {
+  has(left: any, right: any): bool {
     const lefts = this._lefts;
     const rights = this._rights;
     const size = this._size;
@@ -54,7 +54,7 @@ export default class JoinTable {
   /**
    * Adds a new join. (Has no effect if the join already exists.)
    */
-  add(left:any, right:any) {
+  add(left: any, right: any) {
     const lefts = this._lefts;
     const rights = this._rights;
     const size = this._size;
@@ -77,7 +77,7 @@ export default class JoinTable {
    * Remove a join from the table.
    * (Has no effect if the join does not exist.)
    */
-  remove(left:any, right:any) {
+  remove(left: any, right: any) {
     const lefts = this._lefts;
     const rights = this._rights;
     const size = this._size;
@@ -101,7 +101,7 @@ export default class JoinTable {
   /**
    * Gets all 'lefts' associated with the given 'right'.
    */
-  getLeftsFor(right:any) {
+  getLeftsFor(right: any) {
     const lefts = this._lefts;
     const rights = this._rights;
     const size = this._size;
@@ -117,7 +117,7 @@ export default class JoinTable {
   /**
    * Gets all 'rights' associated with the given 'left'.
    */
-  getRightsFor(left:any) {
+  getRightsFor(left: any) {
     const lefts = this._lefts;
     const rights = this._rights;
     const size = this._size;
@@ -133,21 +133,21 @@ export default class JoinTable {
   /**
    * Gets a set of all the lefts.
    */
-  getLefts() {
+  getLefts(): Set {
     return new Set(this._lefts);
   }
 
   /**
    * Gets a set of all the rights.
    */
-  getRights() {
+  getRights(): Set {
     return new Set(this._rights);
   }
 
   /**
    * Returns a string (works with console.log() etc.)
    */
-  inspect() {
+  inspect(): string {
     return `JoinTable[${this._size} joins]`;
   }
 
@@ -155,7 +155,7 @@ export default class JoinTable {
    * Iterating over a JoinTable gets you each join as a two-item array:
    * [left, right]
    */
-  // $FlowIssue
+  // $FlowIssue: computed props not supported
   [Symbol.iterator]() {
     const lefts = this._lefts;
     const rights = this._rights;
