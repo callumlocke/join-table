@@ -2,7 +2,9 @@
 
 [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][depstat-image]][depstat-url] [![devDependency Status][devdepstat-image]][devdepstat-url] [![peerDependency Status][peerdepstat-image]][peerdepstat-url]
 
-Fast mutable collection class to use as a join table. API is similar to [Set], but with each ‘item’ being a pair of values. It is effectively a two-column table, with columns named ‘left’ and ‘right’.
+Fast, mutable collection of pairs of objects.
+
+A JoinTable instance is effectively a table of two columns ('left' and 'right'). The API is similar to [Set], except that methods such as `add`, `has`, and `remove` each take two arguments instead of one.
 
 ## Usage
 
@@ -54,20 +56,20 @@ Returns the [Set] of ‘left’ values that are joined with the given ‘right�
 
 #### getLefts()
 
-Returns a [Set] of all the ‘left’ values.
+Returns a [Set] of all the ‘left’ values in the table.
 
 #### getRights()
 
-Returns a [Set] of all the ‘right’ values.
+Returns a [Set] of all the ‘right’ values in the table.
 
 #### size
 
-The number of joins currently in the table. Note that joins are unique, so if you call `.add('x', 'y')` twice in a row, the second will have no effect on the size.
+The number of joins currently in the table. Note that joins are unique, so if you call `.add(x, y)` twice in a row, the second call will have no effect on the size.
 
 
 ## Iterating
 
-Join tables are [iterable]. Each iteration is given a two-item array in the form `left, right`:
+Join tables are [iterable]. Each iteration receives a two-item array in the form `[left, right]`:
 
 ```js
 const table = new JoinTable();

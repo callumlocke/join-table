@@ -14,7 +14,7 @@ export default class JoinTable {
   /**
    * How many joins are in the table.
    */
-  /* $FlowIssue */
+  // $FlowIssue
   get size(): number {
     return this._size;
   }
@@ -22,7 +22,7 @@ export default class JoinTable {
   /**
    * Disallow overwriting the size property.
    */
-  /* $FlowIssue */
+  // $FlowIssue
   set size(value): void { // eslint-disable-line no-unused-vars, class-methods-use-this
     throw new Error('JoinTable: size property is not writable');
   }
@@ -54,7 +54,7 @@ export default class JoinTable {
   /**
    * Adds a new join. (Has no effect if the join already exists.)
    */
-  add(left: any, right: any) {
+  add(left: any, right: any): this {
     const lefts = this._lefts;
     const rights = this._rights;
     const size = this._size;
@@ -74,10 +74,10 @@ export default class JoinTable {
   }
 
   /**
-   * Remove a join from the table.
+   * Removes a join from the table.
    * (Has no effect if the join does not exist.)
    */
-  remove(left: any, right: any) {
+  delete(left: any, right: any): bool {
     const lefts = this._lefts;
     const rights = this._rights;
     const size = this._size;
@@ -91,17 +91,17 @@ export default class JoinTable {
         lefts.length = lastIndex;
         rights.length = lastIndex;
         this._size = lastIndex;
-        return this;
+        return true;
       }
     }
 
-    return this;
+    return false;
   }
 
   /**
    * Gets all 'lefts' associated with the given 'right'.
    */
-  getLeftsFor(right: any) {
+  getLeftsFor(right: any): Set<any> {
     const lefts = this._lefts;
     const rights = this._rights;
     const size = this._size;
@@ -117,7 +117,7 @@ export default class JoinTable {
   /**
    * Gets all 'rights' associated with the given 'left'.
    */
-  getRightsFor(left: any) {
+  getRightsFor(left: any): Set<any> {
     const lefts = this._lefts;
     const rights = this._rights;
     const size = this._size;
@@ -133,14 +133,14 @@ export default class JoinTable {
   /**
    * Gets a set of all the lefts.
    */
-  getLefts(): Set {
+  getLefts(): Set<any> {
     return new Set(this._lefts);
   }
 
   /**
    * Gets a set of all the rights.
    */
-  getRights(): Set {
+  getRights(): Set<any> {
     return new Set(this._rights);
   }
 
