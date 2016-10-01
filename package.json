@@ -38,10 +38,7 @@
   "eslintConfig": {
     "extends": "airbnb-base",
     "root": "true",
-    "parser": "babel-eslint",
-    "rules": {
-      "no-underscore-dangle": 0
-    }
+    "parser": "babel-eslint"
   },
   "files": [
     "dist/lib",
