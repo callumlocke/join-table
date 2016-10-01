@@ -45,13 +45,13 @@ describe('join-table', () => {
 
   it('removing a join works as expected', () => {
     assert.strictEqual(table.size, 5);
-    table.remove('sheep', 'grass');
+    table.delete('sheep', 'grass');
     assert.strictEqual(table.size, 4);
-    table.remove('sheep', 'grass');
+    table.delete('sheep', 'grass');
     assert.strictEqual(table.size, 4);
     assert.strictEqual(table.has('sheep', 'grass'), false);
 
-    table.remove('rabbit', 'grass');
+    table.delete('rabbit', 'grass');
     assert.strictEqual(table.size, 4,
       'expected size to remain the same after removing non-existent join');
   });
