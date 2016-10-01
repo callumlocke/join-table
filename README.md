@@ -2,7 +2,9 @@
 
 [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][depstat-image]][depstat-url] [![devDependency Status][devdepstat-image]][devdepstat-url] [![peerDependency Status][peerdepstat-image]][peerdepstat-url]
 
-Fast mutable collection class to use as a join table. API is similar to [Set], but with each ‘item’ being a pair of values. It is effectively a two-column table, with columns named ‘left’ and ‘right’.
+Fast, mutable collection of many-to-many pairs of values.
+
+A JoinTable instance is effectively a table of two columns ('left' and 'right'). It's similar to an ES2015 [Set] in that a given left-right combination can only occur once in a table.
 
 ## Usage
 
@@ -17,6 +19,7 @@ table.add('123', 456);
 
 table.has('foo', 'bar'); // true
 table.has('foo', 'baz'); // true
+table.has('123', 456); // true
 
 table.has('xxx', 'yyy'); // false
 table.has('baz', 'foo'); // false (wrong order)
@@ -54,20 +57,20 @@ Returns the [Set] of ‘left’ values that are joined with the given ‘right�
 
 #### getLefts()
 
-Returns a [Set] of all the ‘left’ values.
+Returns a [Set] of all the ‘left’ values in the table.
 
 #### getRights()
 
-Returns a [Set] of all the ‘right’ values.
+Returns a [Set] of all the ‘right’ values in the table.
 
 #### size
 
-The number of joins currently in the table. Note that joins are unique, so if you call `.add('x', 'y')` twice in a row, the second will have no effect on the size.
+The number of joins currently in the table. Note that joins are unique, so if you call `.add(x, y)` twice in a row, the second call will have no effect on the size.
 
 
 ## Iterating
 
-Join tables are [iterable]. Each iteration is given a two-item array in the form `left, right`:
+Join tables are [iterable]. Each iteration receives a two-item array in the form `[left, right]`:
 
 ```js
 const table = new JoinTable();
@@ -84,7 +87,7 @@ for (const [animal, food] of table) {
 // rabbit eats lettuce
 ```
 
-Warning: Updating the table while you're iterating over it might have unpredictable results. If you need to update the table during a loop, spread the table into an array first:
+Warning: mutating the table while you're iterating over it might have unpredictable results. If you need to update the table during a loop, you might want to spread the table into an array first:
 
 ```js
 for (const [x, y] of [...table]) {

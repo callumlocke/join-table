@@ -1,28 +1,34 @@
 // @flow
 
-export default class JoinTable {
-  _size: number;
-  _lefts: Array<any>;
-  _rights: Array<any>;
+const privates: WeakMap<JoinTable, PrivateMembers> = new WeakMap(); // eslint-disable-line no-use-before-define, max-len
 
+declare type PrivateMembers = {
+  size: number,
+  lefts: mixed[],
+  rights: mixed[],
+};
+
+export default class JoinTable {
   constructor() {
-    this._size = 0;
-    this._lefts = [];
-    this._rights = [];
+    privates.set(this, {
+      size: 0,
+      lefts: [],
+      rights: [],
+    });
   }
 
   /**
    * How many joins are in the table.
    */
-  /* $FlowIssue */
+  // $FlowFixMe
   get size(): number {
-    return this._size;
+    return privates.get(this).size;
   }
 
   /**
    * Disallow overwriting the size property.
    */
-  /* $FlowIssue */
+  // $FlowFixMe
   set size(value): void { // eslint-disable-line no-unused-vars, class-methods-use-this
     throw new Error('JoinTable: size property is not writable');
   }
@@ -31,18 +37,17 @@ export default class JoinTable {
    * Empties the table.
    */
   clear(): void {
-    this._size = 0;
-    this._lefts.length = 0;
-    this._rights.length = 0;
+    const p = privates.get(this);
+    p.size = 0;
+    p.lefts.length = 0;
+    p.rights.length = 0;
   }
 
   /**
    * Finds out if a given join exists.
    */
-  has(left: any, right: any): bool {
-    const lefts = this._lefts;
-    const rights = this._rights;
-    const size = this._size;
+  has(left: mixed, right: mixed): boolean {
+    const { lefts, rights, size } = privates.get(this);
 
     for (let i = 0; i < size; i += 1) {
       if (lefts[i] === left && rights[i] === right) return true;
@@ -54,10 +59,10 @@ export default class JoinTable {
   /**
    * Adds a new join. (Has no effect if the join already exists.)
    */
-  add(left: any, right: any) {
-    const lefts = this._lefts;
-    const rights = this._rights;
-    const size = this._size;
+  add(left: mixed, right: mixed): this {
+    const p = privates.get(this);
+
+    const { lefts, rights, size } = p;
 
     // if this join already exists, do nothing
     for (let i = 0; i < size; i += 1) {
@@ -65,46 +70,44 @@ export default class JoinTable {
     }
 
     // add the new join
-    const index = this._size;
-    lefts[index] = left;
-    rights[index] = right;
-    this._size += 1;
+    lefts[size] = left;
+    rights[size] = right;
+    p.size += 1;
 
     return this;
   }
 
   /**
-   * Remove a join from the table.
+   * Removes a join from the table.
    * (Has no effect if the join does not exist.)
    */
-  remove(left: any, right: any) {
-    const lefts = this._lefts;
-    const rights = this._rights;
-    const size = this._size;
+  delete(left: mixed, right: mixed): boolean {
+    const p = privates.get(this);
+
+    const { lefts, rights, size } = p;
 
     for (let i = 0; i < size; i += 1) {
       if (lefts[i] === left && rights[i] === right) {
         // fast method of deleting an item from an array
-        const lastIndex = size - 1;
-        lefts[i] = lefts[lastIndex];
-        rights[i] = rights[lastIndex];
-        lefts.length = lastIndex;
-        rights.length = lastIndex;
-        this._size = lastIndex;
-        return this;
+        const finalIndex = size - 1;
+        lefts[i] = lefts[finalIndex];
+        rights[i] = rights[finalIndex];
+        lefts.length = finalIndex;
+        rights.length = finalIndex;
+        p.size = finalIndex;
+        return true;
       }
     }
 
-    return this;
+    return false;
   }
 
   /**
    * Gets all 'lefts' associated with the given 'right'.
    */
-  getLeftsFor(right: any) {
-    const lefts = this._lefts;
-    const rights = this._rights;
-    const size = this._size;
+  getLeftsFor(right: mixed): Set<mixed> {
+    const { lefts, rights, size } = privates.get(this);
+
     const results = new Set();
 
     for (let i = 0; i < size; i += 1) {
@@ -117,10 +120,9 @@ export default class JoinTable {
   /**
    * Gets all 'rights' associated with the given 'left'.
    */
-  getRightsFor(left: any) {
-    const lefts = this._lefts;
-    const rights = this._rights;
-    const size = this._size;
+  getRightsFor(left: mixed): Set<mixed> {
+    const { lefts, rights, size } = privates.get(this);
+
     const results = new Set();
 
     for (let i = 0; i < size; i += 1) {
@@ -133,38 +135,37 @@ export default class JoinTable {
   /**
    * Gets a set of all the lefts.
    */
-  getLefts(): Set {
-    return new Set(this._lefts);
+  getLefts(): Set<mixed> {
+    return new Set(privates.get(this).lefts);
   }
 
   /**
    * Gets a set of all the rights.
    */
-  getRights(): Set {
-    return new Set(this._rights);
+  getRights(): Set<mixed> {
+    return new Set(privates.get(this).rights);
   }
 
   /**
    * Returns a string (works with console.log() etc.)
    */
   inspect(): string {
-    return `JoinTable[${this._size} joins]`;
+    return `JoinTable[${privates.get(this).size} joins]`;
   }
 
   /**
-   * Iterating over a JoinTable gets you each join as a two-item array:
-   * [left, right]
+   * Each iteration receives a two-item array in the form `[left, right]`.
    */
-  // $FlowIssue: computed props not supported
+  // $FlowFixMe: computed props not supported
   [Symbol.iterator]() {
-    const lefts = this._lefts;
-    const rights = this._rights;
-    const lastIndex = this._size - 1;
+    const { lefts, rights, size } = privates.get(this);
+
+    const finalIndex = size - 1;
     let index = 0;
 
     return {
       next: () => {
-        if (index > lastIndex) return { done: true };
+        if (index > finalIndex) return { done: true };
 
         const result = {
           value: [
