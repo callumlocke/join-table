@@ -2,9 +2,9 @@
 
 [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][depstat-image]][depstat-url] [![devDependency Status][devdepstat-image]][devdepstat-url] [![peerDependency Status][peerdepstat-image]][peerdepstat-url]
 
-Fast, mutable collection of pairs of objects.
+Fast, mutable collection of many-to-many pairs of values.
 
-A JoinTable instance is effectively a table of two columns ('left' and 'right'). The API is similar to [Set], except that methods such as `add`, `has`, and `remove` each take two arguments instead of one.
+A JoinTable instance is effectively a table of two columns ('left' and 'right'). It's similar to an ES2015 [Set] in that a given left-right combination can only occur once in a table.
 
 ## Usage
 
@@ -19,6 +19,7 @@ table.add('123', 456);
 
 table.has('foo', 'bar'); // true
 table.has('foo', 'baz'); // true
+table.has('123', 456); // true
 
 table.has('xxx', 'yyy'); // false
 table.has('baz', 'foo'); // false (wrong order)
@@ -86,7 +87,7 @@ for (const [animal, food] of table) {
 // rabbit eats lettuce
 ```
 
-Warning: Updating the table while you're iterating over it might have unpredictable results. If you need to update the table during a loop, spread the table into an array first:
+Warning: mutating the table while you're iterating over it might have unpredictable results. If you need to update the table during a loop, you might want to spread the table into an array first:
 
 ```js
 for (const [x, y] of [...table]) {

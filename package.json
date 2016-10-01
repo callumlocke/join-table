@@ -52,7 +52,7 @@
     "build": "del dist && babel src --out-dir dist --source-maps",
     "build:watch": "del dist && babel src --out-dir dist --source-maps --watch",
     "prepublish": "npm run build",
-    "test": "eslint . && npm run build && cd dist && mocha",
+    "test": "eslint . && flow && npm run build && cd dist && mocha",
     "test:watch": "cd dist && mocha --watch"
   }
 }

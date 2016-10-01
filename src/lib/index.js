@@ -154,8 +154,7 @@ export default class JoinTable {
   }
 
   /**
-   * An iteration receives each join as a two-item array:
-   * [left, right]
+   * Each iteration receives a two-item array in the form `[left, right]`.
    */
   // $FlowFixMe: computed props not supported
   [Symbol.iterator]() {
