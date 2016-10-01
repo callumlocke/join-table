@@ -49,9 +49,9 @@
     "dist",
     "src"
   ],
-  "jsnext:main": "src/lib/index.js",
+  "jsnext:main": "src/join-table.js",
   "license": "MIT",
-  "main": "dist/lib/index.js",
+  "main": "dist/join-table.js",
   "repository": "callumlocke/join-table",
   "scripts": {
     "build": "del dist && babel src --out-dir dist --source-maps",
