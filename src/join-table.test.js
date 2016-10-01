@@ -1,4 +1,4 @@
-/* eslint-disable no-console, import/no-extraneous-dependencies */
+/* eslint no-console: 0, import/no-extraneous-dependencies: [2, {}] */
 
 import test from 'ava';
 import JoinTable from './join-table';
