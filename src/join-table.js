@@ -1,8 +1,8 @@
 // @flow
 
-const privates: WeakMap<JoinTable, PrivateMembers> = new WeakMap(); // eslint-disable-line no-use-before-define, no-undef, max-len
+const privates: WeakMap<JoinTable, PrivateMembers> = new WeakMap(); // eslint-disable-line no-use-before-define, max-len
 
-declare type PrivateMembers = { // eslint-disable-line no-undef
+declare type PrivateMembers = {
   size: number,
   lefts: any[],
   rights: any[],
@@ -46,7 +46,7 @@ export default class JoinTable {
   /**
    * Finds out if a given join exists.
    */
-  has(left: any, right: any): bool {
+  has(left: any, right: any): boolean {
     const { lefts, rights, size } = privates.get(this);
 
     for (let i = 0; i < size; i += 1) {
@@ -81,7 +81,7 @@ export default class JoinTable {
    * Removes a join from the table.
    * (Has no effect if the join does not exist.)
    */
-  delete(left: any, right: any): bool {
+  delete(left: any, right: any): boolean {
     const p = privates.get(this);
 
     const { lefts, rights, size } = p;

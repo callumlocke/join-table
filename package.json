@@ -25,6 +25,7 @@
     "eslint": "^3.7.0",
     "eslint-config-airbnb-base": "^8.0.0",
     "eslint-plugin-babel": "^3.3.0",
+    "eslint-plugin-flowtype": "^2.19.0",
     "eslint-plugin-import": "^1.16.0",
     "eslint-plugin-jsx-a11y": "^2.2.2",
     "eslint-plugin-react": "^6.3.0",
@@ -34,9 +35,15 @@
     "node": ">=4"
   },
   "eslintConfig": {
-    "extends": "airbnb-base",
+    "extends": [
+      "airbnb-base",
+      "plugin:flowtype/recommended"
+    ],
     "root": "true",
-    "parser": "babel-eslint"
+    "parser": "babel-eslint",
+    "plugins": [
+      "flowtype"
+    ]
   },
   "files": [
     "dist",
