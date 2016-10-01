@@ -4,8 +4,8 @@ const privates: WeakMap<JoinTable, PrivateMembers> = new WeakMap(); // eslint-di
 
 declare type PrivateMembers = {
   size: number,
-  lefts: any[],
-  rights: any[],
+  lefts: mixed[],
+  rights: mixed[],
 };
 
 export default class JoinTable {
@@ -46,7 +46,7 @@ export default class JoinTable {
   /**
    * Finds out if a given join exists.
    */
-  has(left: any, right: any): boolean {
+  has(left: mixed, right: mixed): boolean {
     const { lefts, rights, size } = privates.get(this);
 
     for (let i = 0; i < size; i += 1) {
@@ -59,7 +59,7 @@ export default class JoinTable {
   /**
    * Adds a new join. (Has no effect if the join already exists.)
    */
-  add(left: any, right: any): this {
+  add(left: mixed, right: mixed): this {
     const p = privates.get(this);
 
     const { lefts, rights, size } = p;
@@ -81,7 +81,7 @@ export default class JoinTable {
    * Removes a join from the table.
    * (Has no effect if the join does not exist.)
    */
-  delete(left: any, right: any): boolean {
+  delete(left: mixed, right: mixed): boolean {
     const p = privates.get(this);
 
     const { lefts, rights, size } = p;
@@ -105,7 +105,7 @@ export default class JoinTable {
   /**
    * Gets all 'lefts' associated with the given 'right'.
    */
-  getLeftsFor(right: any): Set<any> {
+  getLeftsFor(right: mixed): Set<mixed> {
     const { lefts, rights, size } = privates.get(this);
 
     const results = new Set();
@@ -120,7 +120,7 @@ export default class JoinTable {
   /**
    * Gets all 'rights' associated with the given 'left'.
    */
-  getRightsFor(left: any): Set<any> {
+  getRightsFor(left: mixed): Set<mixed> {
     const { lefts, rights, size } = privates.get(this);
 
     const results = new Set();
@@ -135,14 +135,14 @@ export default class JoinTable {
   /**
    * Gets a set of all the lefts.
    */
-  getLefts(): Set<any> {
+  getLefts(): Set<mixed> {
     return new Set(privates.get(this).lefts);
   }
 
   /**
    * Gets a set of all the rights.
    */
-  getRights(): Set<any> {
+  getRights(): Set<mixed> {
     return new Set(privates.get(this).rights);
   }
 
