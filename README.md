@@ -1,6 +1,6 @@
 # ♊ join-table
 
-[![NPM version][npm-image]][npm-url] [![CircleCI](circle-badge)](circle-url) [![Dependency Status][depstat-image]][depstat-url]
+[![NPM version][npm-image]][npm-url] [![CircleCI][circle-badge]][circle-url] [![Dependency Status][depstat-image]][depstat-url]
 
 Fast, mutable collection of many-to-many pairs of values.
 
