@@ -1,7 +1,7 @@
 {
   "name": "join-table",
   "description": "Collection class for many-to-many joins",
-  "version": "2.0.0",
+  "version": "3.0.0",
   "ava": {
     "files": "dist/**/*.test.js",
     "babel": {},
@@ -15,7 +15,7 @@
         "env",
         {
           "targets": {
-            "node": 7.10
+            "node": 7.1
           }
         }
       ]
