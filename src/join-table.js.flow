@@ -2,8 +2,7 @@
 
 declare class JoinTable {
   @@iterator(): Iterator<any>;
-  get size(): number;
-  set size(value: any): void;
+  size: number;
   add(left: mixed, right: mixed): this;
   clear(): void;
   delete(left: mixed, right: mixed): boolean;
