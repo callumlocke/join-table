@@ -1,6 +1,6 @@
 // @flow
 
-declare export default class JoinTable {
+declare class JoinTable {
   @@iterator(): Iterator<any>;
   get size(): number;
   set size(value: any): void;
@@ -14,3 +14,5 @@ declare export default class JoinTable {
   has(left: mixed, right: mixed): boolean;
   inspect(): string;
 }
+
+export default JoinTable;

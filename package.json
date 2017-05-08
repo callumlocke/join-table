@@ -52,7 +52,6 @@
   "repository": "callumlocke/join-table",
   "scripts": {
     "clean": "del dist/**",
-    "compile": "babel src --out-dir dist --source-maps --copy-files",
-    "types": "flow gen-flow-files src/join-table.js --out-dir dist"
+    "compile": "babel src --out-dir dist --source-maps --copy-files"
   }
 }
