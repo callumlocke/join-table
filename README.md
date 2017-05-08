@@ -1,6 +1,6 @@
 # ♊ join-table
 
-[![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][depstat-image]][depstat-url]
+[![NPM version][npm-image]][npm-url] [![CircleCI](circle-badge)](circle-url) [![Dependency Status][depstat-image]][depstat-url]
 
 Fast, mutable collection of many-to-many pairs of values.
 
@@ -105,8 +105,8 @@ MIT
 [npm-url]: https://npmjs.org/package/join-table
 [npm-image]: https://img.shields.io/npm/v/join-table.svg?style=flat-square
 
-[travis-url]: http://travis-ci.org/callumlocke/join-table
-[travis-image]: https://img.shields.io/travis/callumlocke/join-table.svg?style=flat-square
+[circle-url]: https://circleci.com/gh/callumlocke/join-table
+[circle-badge]: https://circleci.com/gh/callumlocke/join-table.svg?style=svg
 
 [depstat-url]: https://david-dm.org/callumlocke/join-table
 [depstat-image]: https://img.shields.io/david/callumlocke/join-table.svg?style=flat-square
