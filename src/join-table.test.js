@@ -35,7 +35,7 @@ test('JoinTable', (t) => {
     t.deepEqual(Array.from(table.getLefts()).sort(), ['cow', 'fox', 'rabbit', 'sheep']);
     t.deepEqual(
       Array.from(table.getRights()).sort(),
-      ['carrots', 'grass', 'lettuce', 'rabbit']
+      ['carrots', 'grass', 'lettuce', 'rabbit'],
     );
   }, 'correctly retrieves lefts for a given right, and vice versa');
 
@@ -55,7 +55,6 @@ test('JoinTable', (t) => {
   t.notThrows(() => {
     const results = [];
 
-    // $FlowFixMe
     for (const [left, right] of table) {
       results.push(`${left} eats ${right}`);
     }
@@ -75,7 +74,6 @@ test('JoinTable', (t) => {
     table.clear();
     t.is(table.size, 0);
 
-    // $FlowFixMe
     for (const x of table) {
       console.log(x);
       t.fail('iterating an empty table should have no effect');

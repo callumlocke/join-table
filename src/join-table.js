@@ -2,10 +2,16 @@
 
 const privates: WeakMap<JoinTable, PrivateMembers> = new WeakMap(); // eslint-disable-line no-use-before-define, max-len
 
-declare type PrivateMembers = {
+type PrivateMembers = {
   size: number,
   lefts: mixed[],
   rights: mixed[],
+};
+
+const getPrivates = (instance: JoinTable) => { // eslint-disable-line no-use-before-define
+  const p = privates.get(instance);
+  if (!p) throw new Error('Instance does not exist');
+  return p;
 };
 
 export default class JoinTable {
@@ -20,16 +26,14 @@ export default class JoinTable {
   /**
    * How many joins are in the table.
    */
-  // $FlowFixMe
   get size(): number {
-    return privates.get(this).size;
+    return getPrivates(this).size;
   }
 
   /**
    * Disallow overwriting the size property.
    */
-  // $FlowFixMe
-  set size(value): void { // eslint-disable-line no-unused-vars, class-methods-use-this
+  set size(value: any): void { // eslint-disable-line no-unused-vars, class-methods-use-this
     throw new Error('JoinTable: size property is not writable');
   }
 
@@ -37,7 +41,7 @@ export default class JoinTable {
    * Empties the table.
    */
   clear(): void {
-    const p = privates.get(this);
+    const p = getPrivates(this);
     p.size = 0;
     p.lefts.length = 0;
     p.rights.length = 0;
@@ -47,7 +51,7 @@ export default class JoinTable {
    * Finds out if a given join exists.
    */
   has(left: mixed, right: mixed): boolean {
-    const { lefts, rights, size } = privates.get(this);
+    const { lefts, rights, size } = getPrivates(this);
 
     for (let i = 0; i < size; i += 1) {
       if (lefts[i] === left && rights[i] === right) return true;
@@ -60,7 +64,7 @@ export default class JoinTable {
    * Adds a new join. (Has no effect if the join already exists.)
    */
   add(left: mixed, right: mixed): this {
-    const p = privates.get(this);
+    const p = getPrivates(this);
 
     const { lefts, rights, size } = p;
 
@@ -82,7 +86,7 @@ export default class JoinTable {
    * (Has no effect if the join does not exist.)
    */
   delete(left: mixed, right: mixed): boolean {
-    const p = privates.get(this);
+    const p = getPrivates(this);
 
     const { lefts, rights, size } = p;
 
@@ -106,7 +110,7 @@ export default class JoinTable {
    * Gets all 'lefts' associated with the given 'right'.
    */
   getLeftsFor(right: mixed): Set<mixed> {
-    const { lefts, rights, size } = privates.get(this);
+    const { lefts, rights, size } = getPrivates(this);
 
     const results = new Set();
 
@@ -121,7 +125,7 @@ export default class JoinTable {
    * Gets all 'rights' associated with the given 'left'.
    */
   getRightsFor(left: mixed): Set<mixed> {
-    const { lefts, rights, size } = privates.get(this);
+    const { lefts, rights, size } = getPrivates(this);
 
     const results = new Set();
 
@@ -136,21 +140,21 @@ export default class JoinTable {
    * Gets a set of all the lefts.
    */
   getLefts(): Set<mixed> {
-    return new Set(privates.get(this).lefts);
+    return new Set(getPrivates(this).lefts);
   }
 
   /**
    * Gets a set of all the rights.
    */
   getRights(): Set<mixed> {
-    return new Set(privates.get(this).rights);
+    return new Set(getPrivates(this).rights);
   }
 
   /**
    * Returns a string (works with console.log() etc.)
    */
   inspect(): string {
-    return `JoinTable[${privates.get(this).size} joins]`;
+    return `JoinTable[${getPrivates(this).size} joins]`;
   }
 
   /**
@@ -158,7 +162,7 @@ export default class JoinTable {
    */
   // $FlowFixMe: computed props not supported
   [Symbol.iterator]() {
-    const { lefts, rights, size } = privates.get(this);
+    const { lefts, rights, size } = getPrivates(this);
 
     const finalIndex = size - 1;
     let index = 0;

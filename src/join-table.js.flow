@@ -1,0 +1,16 @@
+// @flow
+
+declare export default class JoinTable {
+  @@iterator(): Iterator<any>;
+  get size(): number;
+  set size(value: any): void;
+  add(left: mixed, right: mixed): this;
+  clear(): void;
+  delete(left: mixed, right: mixed): boolean;
+  getLefts(): Set<mixed>;
+  getLeftsFor(right: mixed): Set<mixed>;
+  getRights(): Set<mixed>;
+  getRightsFor(left: mixed): Set<mixed>;
+  has(left: mixed, right: mixed): boolean;
+  inspect(): string;
+}

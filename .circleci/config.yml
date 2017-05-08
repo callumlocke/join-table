@@ -1,0 +1,39 @@
+version: 2
+jobs:
+  build:
+    working_directory: ~/join-table
+    docker:
+      - image: node:7
+    steps:
+      - checkout
+      - restore_cache:
+          key: join-table-{{ checksum "yarn.lock" }}
+      - run: yarn
+      - save_cache:
+          key: join-table-{{ checksum "yarn.lock" }}
+          paths:
+            - node_modules/
+      - run:
+          name: ESLint
+          command: yarn run eslint -- .
+      # - run:
+      #     name: Flow type-checking
+      #     command: yarn run flow
+      - run:
+          name: Compile with babel
+          command: yarn run compile
+      - run:
+          name: AVA tests
+          command: yarn run ava
+      - run:
+          name: Remove tests from dist
+          command: yarn run del -- ./dist/**/*.test.{js,js.map}
+      - store_artifacts:
+          path: dist/
+      - deploy:
+          name: Maybe publish to npm
+          command: |
+            if [ "${CIRCLE_BRANCH}" == "master" ]; then
+              echo -e "$NPM_USERNAME\n$NPM_PASSWORD\n$NPM_EMAIL" | npm login
+              ./node_modules/.bin/publish
+            fi

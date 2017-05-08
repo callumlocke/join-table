@@ -1,0 +1,14 @@
+root: true
+extends:
+  - airbnb-base
+  - plugin:flowtype/recommended
+parser: babel-eslint
+plugins:
+  - flowtype
+rules:
+  no-restricted-syntax:
+    - error
+    - ForInStatement
+    # - ForOfStatement
+    - LabeledStatement
+    - WithStatement
