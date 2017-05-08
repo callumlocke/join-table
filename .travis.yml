@@ -3,3 +3,5 @@ language: node_js
 node_js:
   - stable
   - '4.6'
+before_script: yarn run clean
+script: yarn run verify && yarn run build && yarn test
