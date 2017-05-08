@@ -3,7 +3,7 @@ jobs:
   build:
     working_directory: ~/join-table
     docker:
-      - image: callum85/node-with-flow:0.0.2
+      - image: node:7
     steps:
       - checkout
       - restore_cache:
@@ -16,9 +16,9 @@ jobs:
       - run:
           name: ESLint
           command: yarn run eslint -- .
-      - run:
-          name: Flow type-checking
-          command: yarn run flow
+      # - run:
+      #     name: Flow type-checking
+      #     command: yarn run flow
       - run:
           name: Compile with babel
           command: yarn run compile
@@ -28,9 +28,6 @@ jobs:
       - run:
           name: Remove tests from dist
           command: yarn run del -- ./dist/**/*.test.{js,js.map}
-      # - run:
-      #     name: Generate typedef
-      #     command: yarn run types
       - store_artifacts:
           path: dist/
       - deploy:

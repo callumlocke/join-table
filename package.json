@@ -15,7 +15,7 @@
         "env",
         {
           "targets": {
-            "node": 7.8
+            "node": 7.10
           }
         }
       ]
@@ -41,7 +41,7 @@
     "flow-bin": "^0.42.0"
   },
   "engines": {
-    "node": ">=7.8"
+    "node": ">=7.10"
   },
   "files": [
     "dist"
